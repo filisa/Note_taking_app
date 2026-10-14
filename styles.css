@@ -19,7 +19,7 @@ h1 {
 }
 /* text area inside the note*/
 .note_textarea {
-    font-size: 2rem;
+    font-size: 1.5rem;
     border: none;
     color:rgba(0, 0, 0, 0.301);
     font-weight: 900;
@@ -65,8 +65,8 @@ h1 {
 .close  {
     position: absolute; 
     padding: 0;     /* taken out of the layout and placed on top */
-    top: 12px;
-    right: 12px;
+    top: 10px;
+    right: 10px;
     z-index: 1;              /* keeps it above the textarea */
     width: 24px;
     height: 24px;
@@ -75,4 +75,5 @@ h1 {
     font-size: 1.4rem;
     line-height: 1;
     cursor: pointer;
+    color: rgba(30, 27, 27, 0.6);
 }
