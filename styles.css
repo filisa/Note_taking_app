@@ -1,18 +1,26 @@
+html,
+body {
+	color: rgb(74, 59, 59);
+	background: linear-gradient(135deg, #fff3b0, #ca26ff);
+	background-repeat: no-repeat;
+	background-size: 100%;
+	height: 2000px;
+	font-family: Quicksand, Tahoma, sans-serif;
+	text-shadow: 1px 1px 1px rgb(60, 196, 47);
+}
+
+.quicksand-Quicksand {
+	font-family: "Quicksand", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+	font-style: normal;
+}
+
 @media (width > 400px) {
 	html,
 	body {
 		margin: 0;
 		padding: 0;
-		font-family: Quicksand, Tahoma, sans-serif;
-		color: rgb(74, 59, 59);
-		background-color: rgb(171, 165, 162);
-	}
-
-	.quicksand-Quicksand {
-		font-family: "Quicksand", sans-serif;
-		font-optical-sizing: auto;
-		font-weight: 500;
-		font-style: normal;
 	}
 
 	main {
@@ -27,7 +35,7 @@
 		margin: 1vw;
 		padding: 1vw;
 		position: relative;
-		background-color: rgb(234, 150, 188);
+		background-color: rgb(150, 234, 158);
 	}
 	/* text area inside the note*/
 	.note_textarea {
@@ -40,7 +48,7 @@
 		box-sizing: border-box;
 		height: 100%;
 		width: 100%;
-		background-color: rgb(234, 150, 188);
+		background-color: rgb(150, 234, 158);
 	}
 
 	.add_new_note {
@@ -96,15 +104,16 @@
 	}
 
 	#remove_all_notes {
-		color: rgb(46, 44, 44);
+		color: rgb(34, 40, 33);
 		border: none;
 		padding: 1vw;
 		border-radius: 20px;
-		background-color: rgba(212, 193, 193, 0.399);
+		background-color: rgba(98, 218, 58, 0.861);
+		font-family: "Quicksand", sans-serif;
 	}
 
 	#remove_all_notes:hover {
-		background-color: rgba(164, 152, 152, 0.566);
+		background-color: rgba(66, 148, 39, 0.861);
 	}
 	#remove_all_notes:active {
 		box-shadow: 2px 2px 5px 7px #7464776a;
@@ -118,21 +127,21 @@
 	body {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: flex-start;
 		align-items: center;
-		margin: 3vw;
-		padding: 0;
-		font-family: Quicksand, Tahoma, sans-serif;
-		color: rgb(74, 59, 59);
-		background-color: rgb(171, 165, 162);
+		margin: 0;
+		text-align: center;
+	}
+	main {
+		margin: 2vw;
 	}
 	.note {
 		height: clamp(180px, 15vw, 15vw);
 		width: clamp(180px, 15vw, 15vw);
 		margin: 2vw;
-		padding: 0;
+		padding: 1vw;
 		position: relative;
-		background-color: rgb(234, 150, 188);
+		background-color: rgb(150, 234, 158);
 	}
 	/* text area inside the note*/
 	.note_textarea {
@@ -145,7 +154,7 @@
 		box-sizing: border-box;
 		height: 100%;
 		width: 100%;
-		background-color: rgb(234, 150, 188);
+		background-color: rgb(150, 234, 158);
 	}
 
 	.add_new_note {
@@ -194,5 +203,6 @@
 		padding: 2.6vw;
 		border-radius: 20px;
 		background-color: rgba(212, 193, 193, 0.399);
+		font-family: "Quicksand", sans-serif;
 	}
 }
