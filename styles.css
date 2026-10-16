@@ -88,6 +88,9 @@ body {
 		width: 100%;
 		background-color: transparent;
 	}
+	.note_textarea:focus {
+		outline: none;
+	}
 
 	.add_new_note {
 		height: clamp(180px, 15vw, 15vw);
