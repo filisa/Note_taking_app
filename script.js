@@ -3,85 +3,85 @@ const allNotes = document.getElementById("all_notes");
 const removeAllNotes = document.getElementById("remove_all_notes");
 
 //an array of objects that stores all the note content and the note id as the key
-let notesArray = [];
+let notesArray = localStorage.getItem("myNotes")
+	? JSON.parse(localStorage.getItem("myNotes"))
+	: [];
 
-// let NotesFromLocalStorage = JSON.parse(localStorage.getItem("My notes"));
-
-function renderTheNotes() {
-	//each note is a div
-	const note = document.createElement("div");
-	allNotes.appendChild(note);
-	const noteId = getRandomId();
-	note.setAttribute("id", noteId);
-	note.setAttribute("class", "note");
-
-	//inside the div there is textarea where you can write
-	const textarea = document.createElement("textarea");
-	textarea.placeholder = "New note";
-	note.appendChild(textarea);
-	textarea.setAttribute("class", "note_textarea");
-	textarea.setAttribute("id", "noteTextarea");
-	textarea.setAttribute("maxlength", 500);
-
-	//push a new object into an array as soon an the note is created
-	const noteObj = { id: noteId, text: "" };
-	notesArray.push(noteObj);
-
-	//add the new object into localstorage
-	// localStorage.setItem("My notes", JSON.stringify(notesArray));
-	// console.log(localStorage);
-
-	let typingTimer;
-	//push the content of the note into the array 500 ms after the user finishes typing
-	textarea.addEventListener("input", function () {
-		clearTimeout(typingTimer);
-		typingTimer = setTimeout(function () {
-			noteObj.text = textarea.value;
-			console.log(notesArray);
-		}, 500);
-	});
-
-	//inside the div there is a button X to delete the note
-	const x = document.createElement("button");
-	x.textContent = "x";
-	x.setAttribute("class", "close");
-	note.appendChild(x);
-
-	//deletes one specific note
-	x.addEventListener("click", function () {
-		note.remove();
-		const specificNote = notesArray.indexOf(noteObj);
-		notesArray.splice(specificNote, 1);
-		console.log(notesArray);
-	});
+//push the changed notes array to local storage
+function saveNotesToLocalStorage() {
+	localStorage.setItem("myNotes", JSON.stringify(notesArray));
+	console.log(localStorage.myNotes);
 }
 
-renderTheNotes();
-
-//adds a new note
 addNewNote.addEventListener("click", function () {
+	pushToNotesArray();
 	renderTheNotes();
 });
 
-//removes all notes
-removeAllNotes.addEventListener("click", function () {
-	const note = document.querySelectorAll(".note");
-	if (notesArray.length != 0) {
-		note.forEach(function (oneNote) {
-			oneNote.remove();
-		});
-		//clears the array
-		notesArray.length = 0;
-		console.log(notesArray);
-		//clears localStorage
-		// localStorage.clear();
-	} else {
-		console.log("nothing to delete");
-	}
-});
-
-//generates a random ID for a note
+//generates an id for a note taking the unix timestamp
 function getRandomId() {
-	const number = Math.floor(Math.random() * 1000);
+	let number = Date.now();
 	return number;
 }
+
+//pushes the new note object into notesArray
+function pushToNotesArray() {
+	const noteId = getRandomId();
+	const noteObj = { id: noteId, text: "" };
+	notesArray.push(noteObj);
+	console.log(notesArray);
+	saveNotesToLocalStorage();
+}
+
+function renderTheNotes() {
+	let noteDiv = "";
+	if (notesArray.length > 0) {
+		notesArray.forEach(function (note) {
+			noteDiv += `
+                <div class="note" id="note-${note.id}">
+                    <button class="close" id="remove-note-${note.id}">x</button>
+                    <textarea maxlength="500" id="note-text-area-${note.id}" class="note_textarea" placeholder="New note"></textarea>
+                </div>
+            `;
+		});
+		allNotes.innerHTML = noteDiv;
+
+		notesArray.forEach(function (note) {
+			const noteTextarea = document.querySelector(`#note-text-area-${note.id}`);
+			const closeBtn = document.querySelector(`#remove-note-${note.id}`);
+
+			noteTextarea.value = note.text;
+			//listen for typing and save the data into the array and Local storage
+			noteTextarea.addEventListener("input", function () {
+				note.text = noteTextarea.value;
+				console.log(notesArray);
+				saveNotesToLocalStorage();
+			});
+
+			//deletes one specific note
+			closeBtn.addEventListener("click", function () {
+				closeBtn.parentElement.remove();
+				const index = notesArray.findIndex((n) => n.id === note.id);
+				notesArray.splice(index, 1);
+				console.log(notesArray);
+				saveNotesToLocalStorage();
+			});
+		});
+	}
+}
+
+//removes all notes
+removeAllNotes.addEventListener("click", function () {
+	//clears the array
+	notesArray = [];
+
+	//clears Local Storage
+	localStorage.removeItem("myNotes");
+
+	//clears all notes html elements
+	allNotes.innerHTML = "";
+	//check for me
+	console.log(notesArray);
+});
+
+renderTheNotes();
