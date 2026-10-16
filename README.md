@@ -117,7 +117,6 @@ I used AI (Perplexity Computer) as a debugging partner and tutor while building 
 
 - Edit and delete confirmation, so a note isn't deleted by accident
 - Let the user choose a colour from a palette instead of a random one
-- Make sure 🎨 never picks the same colour the note already has
 - Note titles
 - Sort notes by date
 

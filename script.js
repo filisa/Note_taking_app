@@ -75,9 +75,13 @@ function renderTheNotes() {
 
 			colorBtn.addEventListener("click", function () {
 				let randomColor = Math.floor(Math.random() * colors.length);
-				note.color = colors[randomColor];
-				noteElement.style.backgroundColor = colors[randomColor];
-				saveNotesToLocalStorage();
+				if (colors[randomColor] !== note.color) {
+					note.color = colors[randomColor];
+					noteElement.style.backgroundColor = colors[randomColor];
+					saveNotesToLocalStorage();
+				} else {
+					console.log("same color as before");
+				}
 			});
 		});
 		console.log(notesArray);
