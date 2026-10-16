@@ -31,6 +31,7 @@ body {
 	cursor: pointer;
 	color: rgba(30, 27, 27, 0.6);
 }
+
 .color {
 	position: absolute;
 	padding: 0; /* taken out of the layout and placed on top */
@@ -47,6 +48,13 @@ body {
 	color: rgba(30, 27, 27, 0.6);
 }
 
+.color:hover {
+	color: #ca26ff;
+}
+
+.close:hover {
+	color: #ca26ff;
+}
 @media (width > 400px) {
 	html,
 	body {
@@ -126,10 +134,10 @@ body {
 		font-family: "Quicksand", sans-serif;
 	}
 
-	button:hover {
+	#remove_all_notes:hover {
 		background-color: rgba(66, 148, 39, 0.861);
 	}
-	button:active {
+	#remove_all_notes:active {
 		box-shadow: 2px 2px 5px 7px #7464776a;
 	}
 }
