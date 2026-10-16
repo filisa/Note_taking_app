@@ -1,3 +1,5 @@
+import { colors } from "./colors.js";
+
 const addNewNote = document.getElementById("add_new_note");
 const allNotes = document.getElementById("all_notes");
 const removeAllNotes = document.getElementById("remove_all_notes");
@@ -10,7 +12,6 @@ let notesArray = localStorage.getItem("myNotes")
 //push the changed notes array to local storage
 function saveNotesToLocalStorage() {
 	localStorage.setItem("myNotes", JSON.stringify(notesArray));
-	console.log(localStorage.myNotes);
 }
 
 addNewNote.addEventListener("click", function () {
@@ -27,9 +28,12 @@ function getRandomId() {
 //pushes the new note object into notesArray
 function pushToNotesArray() {
 	const noteId = getRandomId();
-	const noteObj = { id: noteId, text: "" };
+	const noteObj = {
+		id: noteId,
+		text: "",
+		color: colors[Math.floor(Math.random() * colors.length)],
+	};
 	notesArray.push(noteObj);
-	console.log(notesArray);
 	saveNotesToLocalStorage();
 }
 
@@ -40,6 +44,7 @@ function renderTheNotes() {
 			noteDiv += `
                 <div class="note" id="note-${note.id}">
                     <button class="close" id="remove-note-${note.id}">x</button>
+					<button class="color" id="color-note-${note.id}">🎨</button>	
                     <textarea maxlength="500" id="note-text-area-${note.id}" class="note_textarea" placeholder="New note"></textarea>
                 </div>
             `;
@@ -49,12 +54,14 @@ function renderTheNotes() {
 		notesArray.forEach(function (note) {
 			const noteTextarea = document.querySelector(`#note-text-area-${note.id}`);
 			const closeBtn = document.querySelector(`#remove-note-${note.id}`);
+			const colorBtn = document.querySelector(`#color-note-${note.id}`);
+			const noteElement = document.querySelector(`#note-${note.id}`); // the note div
 
 			noteTextarea.value = note.text;
+			noteElement.style.backgroundColor = note.color || "";
 			//listen for typing and save the data into the array and Local storage
 			noteTextarea.addEventListener("input", function () {
 				note.text = noteTextarea.value;
-				console.log(notesArray);
 				saveNotesToLocalStorage();
 			});
 
@@ -63,10 +70,17 @@ function renderTheNotes() {
 				closeBtn.parentElement.remove();
 				const index = notesArray.findIndex((n) => n.id === note.id);
 				notesArray.splice(index, 1);
-				console.log(notesArray);
+				saveNotesToLocalStorage();
+			});
+
+			colorBtn.addEventListener("click", function () {
+				let randomColor = Math.floor(Math.random() * colors.length);
+				note.color = colors[randomColor];
+				noteElement.style.backgroundColor = colors[randomColor];
 				saveNotesToLocalStorage();
 			});
 		});
+		console.log(notesArray);
 	}
 }
 
@@ -80,8 +94,6 @@ removeAllNotes.addEventListener("click", function () {
 
 	//clears all notes html elements
 	allNotes.innerHTML = "";
-	//check for me
-	console.log(notesArray);
 });
 
 renderTheNotes();
