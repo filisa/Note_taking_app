@@ -1,3 +1,4 @@
+// add comment to create diff
 import { colors } from "./colors.js";
 
 const addNewNote = document.getElementById("add_new_note");
