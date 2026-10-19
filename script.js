@@ -78,7 +78,7 @@ function renderTheNotes() {
 			});
 
 			colorBtn.addEventListener("click", function () {
-				let randomColor = Math.floor(Math.random() * colors.length);
+				const randomColor = Math.floor(Math.random() * colors.length); // doesnt reassign use const
 				if (colors[randomColor] !== note.color) {
 					note.color = colors[randomColor];
 					noteElement.style.backgroundColor = colors[randomColor];
