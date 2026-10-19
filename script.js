@@ -1,10 +1,12 @@
-// add comment to create diff
 import { colors } from "./colors.js";
 
+// suggestion to update the variable names to be clearer for example removeAllNotesButton
 const addNewNote = document.getElementById("add_new_note");
 const allNotes = document.getElementById("all_notes");
 const removeAllNotes = document.getElementById("remove_all_notes");
 
+// "myNotes" could be extracted as a const since it's reused throughout
+// localStorage.getItem stored as a variable since it's used twice
 //an array of objects that stores all the note content and the note id as the key
 let notesArray = localStorage.getItem("myNotes")
 	? JSON.parse(localStorage.getItem("myNotes"))
@@ -20,6 +22,7 @@ addNewNote.addEventListener("click", function () {
 	renderTheNotes();
 });
 
+// redundant function
 //generates an id for a note taking the unix timestamp
 function getRandomId() {
 	let number = Date.now();
@@ -27,8 +30,8 @@ function getRandomId() {
 }
 
 //pushes the new note object into notesArray
-function pushToNotesArray() {
-	const noteId = getRandomId();
+function pushToNotesArray() { // name the function what it does, for example createNote, rather than what happens internally
+	const noteId = getRandomId(); // unix could potentially not be unique if created at the same millisecond, recommend using randomUUID()
 	const noteObj = {
 		id: noteId,
 		text: "",
@@ -39,8 +42,8 @@ function pushToNotesArray() {
 }
 
 function renderTheNotes() {
-	let noteDiv = "";
-	if (notesArray.length > 0) {
+	let noteDiv = ""; // clearer name would be notesMarkup or notesHTML
+	if (notesArray.length > 0) { // if is redundant, notes exist render them, if not clear the interface
 		notesArray.forEach(function (note) {
 			noteDiv += `
                 <div class="note" id="note-${note.id}">
@@ -68,7 +71,7 @@ function renderTheNotes() {
 
 			//deletes one specific note
 			closeBtn.addEventListener("click", function () {
-				closeBtn.parentElement.remove();
+				closeBtn.parentElement.remove(); // instead of removing from the DOM and the array only remove from the array and re-render the ui, that way theres only one source of truth
 				const index = notesArray.findIndex((n) => n.id === note.id);
 				notesArray.splice(index, 1);
 				saveNotesToLocalStorage();
