@@ -1,37 +1,30 @@
 import { colors } from "./colors.js";
 
-// suggestion to update the variable names to be clearer for example removeAllNotesButton
-const addNewNote = document.getElementById("add_new_note");
-const allNotes = document.getElementById("all_notes");
-const removeAllNotes = document.getElementById("remove_all_notes");
+const addNewNoteButton = document.getElementById("add_new_note_btn");
+const allNotesDiv = document.getElementById("all_notes");
+const removeAllNotesButton = document.getElementById("remove_all_notes_btn");
 
-// "myNotes" could be extracted as a const since it's reused throughout
-// localStorage.getItem stored as a variable since it's used twice
-//an array of objects that stores all the note content and the note id as the key
-let notesArray = localStorage.getItem("myNotes")
-	? JSON.parse(localStorage.getItem("myNotes"))
+//an array of objects that stores all the note content and the note id as the key. <-THIS ONE I DON't understand:(
+const notesFromTheLocalStorage = localStorage.getItem("myNotes");
+let notesArray = [];
+notesArray = notesFromTheLocalStorage
+	? JSON.parse(notesFromTheLocalStorage)
 	: [];
-
+console.log(notesArray);
 //push the changed notes array to local storage
 function saveNotesToLocalStorage() {
 	localStorage.setItem("myNotes", JSON.stringify(notesArray));
 }
 
-addNewNote.addEventListener("click", function () {
-	pushToNotesArray();
+addNewNoteButton.addEventListener("click", function () {
+	createNote();
 	renderTheNotes();
 });
 
-// redundant function
-//generates an id for a note taking the unix timestamp
-function getRandomId() {
-	let number = Date.now();
-	return number;
-}
-
-//pushes the new note object into notesArray
-function pushToNotesArray() { // name the function what it does, for example createNote, rather than what happens internally
-	const noteId = getRandomId(); // unix could potentially not be unique if created at the same millisecond, recommend using randomUUID()
+//pushes the new note object into notesArray and saves to Local storage too
+function createNote() {
+	// line below generates a random UUID using cryptographically secure random number generator. Wow. nice.
+	const noteId = crypto.randomUUID();
 	const noteObj = {
 		id: noteId,
 		text: "",
@@ -42,10 +35,10 @@ function pushToNotesArray() { // name the function what it does, for example cre
 }
 
 function renderTheNotes() {
-	let noteDiv = ""; // clearer name would be notesMarkup or notesHTML
-	if (notesArray.length > 0) { // if is redundant, notes exist render them, if not clear the interface
+	let notesHTML = "";
+	if (notesArray.length > 0) {
 		notesArray.forEach(function (note) {
-			noteDiv += `
+			notesHTML += `
                 <div class="note" id="note-${note.id}">
                     <button class="close" id="remove-note-${note.id}">x</button>
 					<button class="color" id="color-note-${note.id}">🎨</button>	
@@ -53,7 +46,7 @@ function renderTheNotes() {
                 </div>
             `;
 		});
-		allNotes.innerHTML = noteDiv;
+		allNotesDiv.innerHTML = notesHTML;
 
 		notesArray.forEach(function (note) {
 			const noteTextarea = document.querySelector(`#note-text-area-${note.id}`);
@@ -69,16 +62,16 @@ function renderTheNotes() {
 				saveNotesToLocalStorage();
 			});
 
-			//deletes one specific note
+			//deletes one specific note and re-renders all the notes again
 			closeBtn.addEventListener("click", function () {
-				closeBtn.parentElement.remove(); // instead of removing from the DOM and the array only remove from the array and re-render the ui, that way theres only one source of truth
 				const index = notesArray.findIndex((n) => n.id === note.id);
 				notesArray.splice(index, 1);
+				renderTheNotes();
 				saveNotesToLocalStorage();
 			});
 
 			colorBtn.addEventListener("click", function () {
-				const randomColor = Math.floor(Math.random() * colors.length); // doesnt reassign use const
+				const randomColor = Math.floor(Math.random() * colors.length);
 				if (colors[randomColor] !== note.color) {
 					note.color = colors[randomColor];
 					noteElement.style.backgroundColor = colors[randomColor];
@@ -89,11 +82,20 @@ function renderTheNotes() {
 			});
 		});
 		console.log(notesArray);
+	} else {
+		//clears the array
+		notesArray = [];
+
+		//clears Local Storage
+		localStorage.removeItem("myNotes");
+
+		//clears all notes html elements
+		allNotesDiv.innerHTML = "";
 	}
 }
 
 //removes all notes
-removeAllNotes.addEventListener("click", function () {
+removeAllNotesButton.addEventListener("click", function () {
 	//clears the array
 	notesArray = [];
 
@@ -101,7 +103,7 @@ removeAllNotes.addEventListener("click", function () {
 	localStorage.removeItem("myNotes");
 
 	//clears all notes html elements
-	allNotes.innerHTML = "";
+	allNotesDiv.innerHTML = "";
 });
 
 renderTheNotes();
