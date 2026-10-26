@@ -92,7 +92,7 @@ body {
 		outline: none;
 	}
 
-	.add_new_note {
+	.add_new_note_btn {
 		height: clamp(180px, 15vw, 15vw);
 		width: clamp(180px, 15vw, 15vw);
 		margin: 1vw;
@@ -107,9 +107,10 @@ body {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		border-radius: 0;
 	}
 
-	.add_new_note:hover {
+	.add_new_note_btn:hover {
 		background-color: rgb(58, 116, 70);
 	}
 
@@ -128,20 +129,20 @@ body {
 		text-align: center;
 	}
 
-	button {
-		color: rgb(34, 40, 33);
+	#remove_all_notes_btn {
+		color: rgb(51, 79, 46);
 		border: none;
 		padding: 1vw;
 		border-radius: 20px;
-		background-color: rgba(98, 218, 58, 0.861);
+		background-color: rgba(130, 211, 106, 0.604);
 		font-family: "Quicksand", sans-serif;
 	}
 
-	#remove_all_notes:hover {
-		background-color: rgba(66, 148, 39, 0.861);
+	#remove_all_notes_btn:hover {
+		background-color: rgba(162, 77, 208, 0.861);
 	}
-	#remove_all_notes:active {
-		box-shadow: 2px 2px 5px 7px #7464776a;
+	#remove_all_notes_btn:active {
+		box-shadow: 2px 2px 5px 7px #49cb356a;
 	}
 }
 
@@ -181,7 +182,7 @@ body {
 		width: 100%;
 	}
 
-	.add_new_note {
+	.add_new_note_btn {
 		height: clamp(60px, 7vw, 6vw);
 		width: clamp(180px, 15vw, 15vw);
 		margin: 1vw;
