@@ -122,4 +122,4 @@ I used AI (Perplexity Computer) as a debugging partner and tutor while building 
 
 ## Author
 
-Margarita Nikulina © 2026 · [Visit my website](https://candid-mochi-ebd3a7.netlify.app/)
+Margarita Nikulina © 2026 · [Visit my website](https://rita-est-burrito.netlify.app/)
